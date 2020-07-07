@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 
-let commandList = ['.announcements', '.audit', '.commands', '.contracts', '.crv', '.farming', '.guides', '.risks', '.rules', '.twitter', '.when', '.whisper'];
+let commandList = ['.announcements', '.audit', '.commands', '.contracts', '.crv', '.farming', '.guides', '.risks', '.rules', '.twitter', '.wen', '.when', '.whisper'];
 
 client.on('message', msg => {
   if (msg.content === '.commands') {
@@ -22,7 +22,7 @@ client.on('message', msg => {
   if (msg.content === '.contracts') {
     client.channels.cache.get(msg.channel.id).send(`You can read our smart contracts at this address: https://www.curve.fi/contracts`);
   }
-  if (msg.content === '.crv' || msg.content === '.when') {
+  if (msg.content === '.crv' || msg.content === '.when' || msg.content === '.wen') {
     client.channels.cache.get(msg.channel.id).send(`The Curve native token (CRV) has not been released yet. If you wish to find more information about click the following link: https://guides.curve.fi/everything-you-need-to-know-about-crv/`);
   }
   if (msg.content === '.farming') {
