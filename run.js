@@ -17,4 +17,4 @@ client.on('message', msg => {
 });
 
 
-client.login("NzI5ODE0NDY3NDk5NTI0MDk2.XwOa3g.Ov5Sr498d6Ch42YnmaqHoYFVCg0");
+client.login(process.env.discord_token);
