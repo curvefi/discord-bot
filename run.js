@@ -23,7 +23,7 @@ client.on('message', msg => {
     client.channels.cache.get(msg.channel.id).send(`You can read our smart contracts at this address: https://www.curve.fi/contracts`);
   }
   if (msg.content === '.crv' || msg.content === '.when' || msg.content === '.wen') {
-    client.channels.cache.get(msg.channel.id).send(`The Curve native token (CRV) has not been released yet. If you wish to find more information about click the following link: https://guides.curve.fi/everything-you-need-to-know-about-crv/`);
+    client.channels.cache.get(msg.channel.id).send(`Now: https://guides.curve.fi/crv-launches-curve-dao-and-crv/`);
   }
   if (msg.content === '.farming') {
     client.channels.cache.get(msg.channel.id).send(`https://i.imgur.com/YPfHjVI.jpg`);
