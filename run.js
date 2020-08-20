@@ -54,7 +54,7 @@ client.on('message', msg => {
       if(client.channels.cache.get(msg.channel.id) == 735144456914731098){
       client.channels.cache.get(msg.channel.id).send(`Price: $${response.data['curve-dao-token'].usd}
 24H Volume: $${numberWithCommas(response.data['curve-dao-token'].usd_24h_vol.toFixed(2))}
-24H Change: ${response.data['curve-dao-token'].usd_24h_change.toFixed(2)}
+24H Change: ${response.data['curve-dao-token'].usd_24h_change.toFixed(2)} %
 Market Cap: $${numberWithCommas(response.data['curve-dao-token'].usd_market_cap.toFixed(2))}`);
 }
     });
