@@ -1,12 +1,13 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const axios = require("axios");
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
 
-let commandList = ['.announcements', '.audit', '.commands', '.contracts', '.crv', '.farming', '.guides', '.risks', '.rules', '.twitter', '.wen', '.when', '.whisper'];
+let commandList = ['.announcements', '.audit', '.commands', '.contracts', '.crv', '.farming', '.guides', '.risks', '.rules', '.twitter', '.wen', '.when', '.whisper', '.market'];
 
 client.on('message', msg => {
   if (msg.content === '.commands') {
@@ -43,9 +44,27 @@ client.on('message', msg => {
   if (msg.content === '.whisper') {
     client.channels.cache.get(msg.channel.id).send(`https://i.imgur.com/skgQJ3K.jpg`);
   }
+  if (msg.content === '.market') {
+    axios({
+      method: 'get',
+      url: 'https://api.coingecko.com/api/v3/simple/price?ids=curve-dao-token&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true',
+      responseType: 'json'
+    })
+      .then(function(response) {
+      console.log(response.data);
+      client.channels.cache.get(msg.channel.id).send(`Price: $${response.data['curve-dao-token'].usd}
+24H Volume: $${numberWithCommas(response.data['curve-dao-token'].usd_24h_vol.toFixed(2))}
+24H Change: ${response.data['curve-dao-token'].usd_24h_change.toFixed(2)}
+Market Cap: $${numberWithCommas(response.data['curve-dao-token'].usd_market_cap.toFixed(2))}`);
+    });
+  }
 
 
 });
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 var makeList = () => {
@@ -56,4 +75,5 @@ var makeList = () => {
   return commandListString;
 }
 
-client.login(process.env.discord_token);
+//client.login(process.env.discord_token);
+client.login("NzQ1OTE5NTEwMjUwMzg5NTc1.Xz4xrQ.sripvR_jHv_MM1NAbjku_0FgdJc");
