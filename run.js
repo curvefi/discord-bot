@@ -75,5 +75,4 @@ var makeList = () => {
   return commandListString;
 }
 
-//client.login(process.env.discord_token);
-client.login("NzQ1OTE5NTEwMjUwMzg5NTc1.Xz4xrQ.sripvR_jHv_MM1NAbjku_0FgdJc");
+client.login(process.env.discord_token);
