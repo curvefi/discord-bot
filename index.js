@@ -54,7 +54,7 @@ client.on('message', async msg => {
         };
         let response = await retry(async bail => await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=curve-dao-token&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true'))
         if(client.channels.cache.get(msg.channel.id) == 735144456914731098){
-            client.channels.cache.get(msg.channel.id).send(`Price: ${response.data['curve-dao-token'].usd}$\n\r24H Volume: ${Number(response.data['curve-dao-token'].usd_24h_vol).toLocaleString('en', options)}$\n\r24H Change: ${response.data['curve-dao-token'].usd_24h_change.toFixed(2)} %`);
+            client.channels.cache.get(msg.channel.id).send(`Price: ${response.data['curve-dao-token'].usd}$\r24H Volume: $${Number(response.data['curve-dao-token'].usd_24h_vol).toLocaleString('en', options)}\r24H Change: ${response.data['curve-dao-token'].usd_24h_change.toFixed(2)} %`);
         }
   }
 
