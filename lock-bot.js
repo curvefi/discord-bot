@@ -4,11 +4,13 @@ const BigNumber = require("bignumber.js");
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const axios = require("axios");
+const { Telegraf } = require('telegraf')
 
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
+
 
 
 const endpoint = 'https://api.thegraph.com/subgraphs/name/pengiundev/curve-votingescrow-mainnet'
@@ -29,17 +31,20 @@ async function run() {
       type
       totalPower
     }
+    crvlockeds {
+       CRV
+    }
   }
   `;
   const results = await retry(async bail => await graphQLClient.request(query))
-  //console.log(results);
+  // console.log(results);
 
   var total_locked = 0;
   var total_velocked = 0;
   var count = 0;
 
   results.votingEscrows.forEach((item) => {
-    if (item.type !== 'increase_unlock_time') {
+    if (item.type !== 'increase_unlock_time' && item.type !== 'withdraw') {
       var crv_amount = new BigNumber(item.value).div(10 ** 18).toFixed(0);
       var vecrv_amount = new BigNumber(item.value * (item.locktime - (Date.now() / 1000))).div(10 ** 18) / (86400 * 365) / 4;
 
@@ -50,21 +55,26 @@ async function run() {
 
   })
 
-  var llamas = getLlamas(total_locked);
-
+  var total_locked_all = new BigNumber(results.crvlockeds[0].CRV).div(10 ** 18).toFixed(0);
+  total_locked_all = total_locked_all / 1000000;
+  console.log(`total locked  = ${total_locked_all.toFixed(2)}`);
   var price = await get_price();
   console.log(`Current price is $${price}`);
   var total_amount = parseInt(total_locked * price);
+
+  var llamas = getLlamas(total_amount);
+
+  var total_value_locked = parseInt(total_locked_all * price * 1000000);
+
   var addresses = (count > 1)?'addresses':'address';
-  var message = `${count} ${addresses} just locked a total of ${total_locked.toLocaleString()} CRV ($${total_amount.toLocaleString()}) adding a voting power of ${total_velocked} veCRV | ${llamas}`;
+  var message = `${count} ${addresses} just locked a total of ${total_locked.toLocaleString()} CRV ($${total_amount.toLocaleString()}) adding voting power of ${total_velocked} veCRV | Total locked: ${total_locked_all.toFixed(2)}M CRV ($${total_value_locked.toLocaleString()}) | ${llamas}`;
 
-  console.log(message);
-
+  //console.log(message);
   if (total_locked > 0) {
-    broadcastMessage(message);
+      broadcastMessage(message);
   }
 
-  sleep(300000).then(()=> {
+  sleep(1000*15*60).then(()=> {
     run();
   })
 
@@ -81,8 +91,14 @@ function broadcastMessage(message) {
 }
 
 function getLlamas(crv_amount) {
+  if (crv_amount > 500000) {
+    return `🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙`;
+  }
   if (crv_amount > 100000) {
-    return `🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙`;
+    return `🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙`;
+  }
+  if (crv_amount > 50000) {
+    return `🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙🦙`;
   }
   if (crv_amount > 10000) {
     return `🦙🦙🦙🦙🦙🦙🦙🦙`;
@@ -108,10 +124,8 @@ sleep(2000).then(() => {
 })
 
 
-const { Telegraf } = require('telegraf')
 
 const bot = new Telegraf(process.env.tg_token)
 
 bot.launch().then(() => {});
-
 client.login(process.env.discord_token);
