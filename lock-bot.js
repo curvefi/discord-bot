@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { GraphQLClient, gql } = require('graphql-request')
 const retry = require('async-retry')
 const BigNumber = require("bignumber.js");
