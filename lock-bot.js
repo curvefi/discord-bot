@@ -19,7 +19,7 @@ const graphQLClient = new GraphQLClient(endpoint)
 
 async function run() {
   //console.log('Fetching ...');
-  var currentStamp = Date.now() / 1000 - 60*15 | 0;
+  var currentStamp = Date.now() / 1000 - 60*60 | 0;
   var query = gql`
   {
     votingEscrows(orderBy: timestamp, orderDirection: desc, where: { timestamp_gt: ${currentStamp}}) {
@@ -74,7 +74,7 @@ async function run() {
       broadcastMessage(message);
   }
 
-  sleep(1000*15*60).then(()=> {
+  sleep(1000*60*60).then(()=> {
     run();
   })
 
