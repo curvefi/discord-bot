@@ -149,7 +149,7 @@ async function getFees() {
     }
     `;
     const results = await retry(async bail => await graphQLClient.request(query))
-    console.log(results);
+    //console.log(results);
     return parseFloat(results.exchangePartners[0].usdFees * 0.25);
     //return results.uniswapFactory.totalLiquidityUSD
 }
