@@ -18,7 +18,7 @@ client.on('message', async msg => {
   }
   /*commands*/
   if (msg.content === '.announcements') {
-    client.channels.cache.get(msg.channel.id).send(`If you are looking to keep up with Curve news, you can join our Telegram announcement channel: https://t.me/curvefiann`);
+    client.channels.cache.get(msg.channel.id).send(`If you are looking to keep up with Curve news, you can join our Telegram announcement channel: https://t.me/curvefiann\rFeel free to subscribe to our blog too: https://news.curve.fi/`);
   }
   if (msg.content === '.audit') {
     client.channels.cache.get(msg.channel.id).send(`Find details about Curve Finance audits at this address: https://www.curve.fi/audits`);
