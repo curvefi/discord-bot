@@ -27,13 +27,13 @@ client.on('message', async msg => {
     client.channels.cache.get(msg.channel.id).send(`You can read our smart contracts at this address: https://www.curve.fi/contracts`);
   }
   if (msg.content === '.crv' || msg.content === '.when' || msg.content === '.wen' || msg.content === '.now') {
-    client.channels.cache.get(msg.channel.id).send(`Now: https://guides.curve.fi/crv-launches-curve-dao-and-crv/`);
+    client.channels.cache.get(msg.channel.id).send(`Now: https://resources.curve.fi/base-features/understanding-crv`);
   }
   if (msg.content === '.farming') {
     client.channels.cache.get(msg.channel.id).send(`https://i.imgur.com/YPfHjVI.jpg`);
   }
   if (msg.content === '.guides') {
-    client.channels.cache.get(msg.channel.id).send(`If you are looking for help to get started with Curve Finance, visit our Guides blog: https://guides.curve.fi/`);
+    client.channels.cache.get(msg.channel.id).send(`If you are looking for help to get started with Curve Finance, visit our Guides blog: https://resources.curve.fi/`);
   }
   if (msg.content === '.risks') {
     client.channels.cache.get(msg.channel.id).send(`It's important to understand the risks associated with providing liquidity on Curve Finance https://www.curve.fi/risks`);
